@@ -1,23 +1,27 @@
+const http = require("http");
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const port = 8080;
 
 app.use(bodyParser.json());
 
 app.get("/", (_, response) => {
   console.log("GET / 200");
-  response.json({ endpoints: ["GET /ready", "POST /hello"] });
+  response.json({ endpoints: ["GET /health", "POST /hello", "GET /foo"] });
 });
-app.get("/ready", (_, response) => {
-  console.log("GET /ready 200");
+app.get("/health", (_, response) => {
+  console.log("GET /health 200");
   response.json({ status: "pass" });
+});
+app.get("/foo", (_, result) => {
+  console.log("GET /foo 200");
+  result.json({ message: "baz" });
 });
 app.post("/hello", (request, response) => {
   console.log("POST /hello 200");
   response.json({ message: `hello, ${request.body.name}` });
 });
 
-app.listen(port, () =>
-  console.log(`Example app listening at http://localhost:${port}`)
-);
+module.exports = {
+  server: http.createServer(app),
+};
