@@ -9,7 +9,7 @@ app.get("/", (_, response) => {
   console.log("GET / 200");
   response.json({ endpoints: ["GET /health", "POST /hello", "GET /foo"] });
 });
-app.get("/health", (_, response) => {
+app.get("/ready", (_, response) => {
   console.log("GET /health 200");
   response.json({ status: "pass" });
 });
